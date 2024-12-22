@@ -1,0 +1,22 @@
+/* Center the container */
+.heading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #f4f4f9;   */
+  }
+  
+  /* Styling the title */
+  .heading-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color:gray;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);  /* Subtle shadow for better readability */
+    letter-spacing: 2px;  /* Adding space between letters for a modern look */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+  }
+  .heading-title span{
+    color: rgb(82, 81, 81);
+  }
+  

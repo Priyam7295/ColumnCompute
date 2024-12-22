@@ -1,0 +1,54 @@
+.bosy_content {
+margin-top: 20px;
+display: flex;
+margin-left: 50px;
+margin-right: 60px;
+}
+
+.left_side {
+text-align: center;
+flex: 1;
+/* background-color: pink; */
+/* border: 2px solid black; */
+display: flex;
+height: 500px;
+justify-content: center; /* Center vertically */
+align-items: center; /* Center vertically */
+}
+
+.right_side {
+flex: 1;
+/* border: 2px solid black; */
+height: 100px;
+/* background-color: pink; */
+}
+
+.right_side img {
+width: 100%;
+}
+
+.maine-title_heading {
+font-size: 21px;
+font-weight: 200;
+color: gray;
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+letter-spacing: 1px;
+font-family: 'Arial', sans-serif;
+text-align: center;
+}
+
+.maine-title_para {
+padding-left: 50px;
+font-family: 'Arial', sans-serif;
+text-align: center;
+margin-bottom: 20px;
+line-height: 1.5;
+}
+
+
+.go_analyse{
+background-color: orange;
+}
+.go_analyse:hover{
+background-color: rgb(36, 25, 3);
+}

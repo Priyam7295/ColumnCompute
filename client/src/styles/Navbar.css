@@ -1,0 +1,118 @@
+
+/* Navbar styling */
+.navbar {
+  
+  top: 0; /* Position it at the very top */
+  left: 0;
+  right: 0; /* Make it span the full width */
+  background-color: #f8f9fa;
+  padding: 7px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* margin-bottom: 100px; */
+  
+}
+
+/* Rest of your CSS for .navContent, .authSection, etc. */
+
+.navContent {
+  display: flex;
+  justify-content: space-between;  /* Ensures space between elements */
+  width: 100%;
+  align-items: center;
+}
+
+.authSection {
+  display: flex;
+  align-items: center;
+  margin-left: auto;  /* Pushes the authSection to the right */
+}
+
+.loginButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;  /* Darker blue on hover */
+}
+
+.logoutButton {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+
+.getStartedButton{
+  background-color: #f37819;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  
+}
+.getStartedButton:hover{
+  background-color: #d07834;
+  
+  
+}
+
+.logoutButton:hover {
+  background-color: #c82333;  /* Darker red on hover */
+}
+
+
+.loggedInSection {
+  display: flex;
+  align-items: center;
+}
+
+.welcomeMessage{
+  font-weight: 200;
+  font-size: 20px;
+  
+}
+
+
+.Logintogetstaterd{
+  font-weight: 200;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+
+
+.ProfileArea{
+  /* background-color:palegoldenrod; */
+  padding: 6px;
+  border-radius: 12px;
+  color:gray;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.ProfileArea img {
+  /* background-color: #0056b3; */
+  width: 20px;
+}
+
+
+.welcomeMessageNv2{
+  padding: 4px;
+}
