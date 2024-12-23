@@ -11,6 +11,10 @@
 
 ---
 ## 1. Quick Walkthrough
+
+CLICK TO SEE VIDEO
+https://www.loom.com/share/8b533f2fa4b24128a64f6140a06d3caf?sid=456aa2b1-1f99-4a5b-83df-2e5531df5b28
+
 <img src="https://github.com/user-attachments/assets/5508aff7-32ad-44ac-b5fd-545e2c18fdb7" width="400"/>
 <img src="https://github.com/user-attachments/assets/8d67eb38-33f7-4e03-b792-b1948db52fd9" width="400"/>
 <img src="https://github.com/user-attachments/assets/2d61a75e-98c7-4ca5-9d3d-cd26c5831584" width="400"/>
