@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Homepage.css";
 import "./App.css";
+import Papa from 'papaparse';
 import GraphImage from "./assets/rb_17893.png";
 import Navbar2 from "./components/Navbar2.jsx";
 import { createClient } from "@supabase/supabase-js";
-// import { config } from 'dotenv';
-import swal from 'sweetalert'
+import swal from "sweetalert";
+import { use } from "react";
+
 const FileUpload = () => {
   const { user, isAuthenticated } = useAuth0();
   const [file, setFile] = useState(null);
@@ -20,18 +22,20 @@ const FileUpload = () => {
   const [c3nans, setC3nans] = useState();
   const [c4nans, setC4nans] = useState();
   const [c3list, setC3list] = useState();
-  const [isDragging, setIsDragging] = useState(false); 
+  const [isDragging, setIsDragging] = useState(false);
+  const [data, setData] = useState();
+  const [isc3dataerror, setIsc3dataerror] = useState(false);
+  const [isc4dataerror, setIsc4dataerror] = useState(false);
+  const [columnC3, setColumnC3] = useState([]); // Initialize as an empty array
+  const [c3Values, setc3Values] = useState([]); // Initialize as an empty array
+  const [c4Values, setc4Values] = useState([]); // Initialize as an empty array
 
-  const [isc3dataerror, setIsc3dataerror] = useState(false); 
-  const [isc4dataerror, setIsc4dataerror] = useState(false); 
-
-  const [anyOneAbsent, setanyOneAbsent] = useState(false); 
+  const [anyOneAbsent, setAnyOneAbsent] = useState(false);
 
   const handleDragOver = (e) => {
     e.preventDefault(); // Prevent default behavior
     setError(""); // Clear any previous errors
     setIsDragging(true);
-   
   };
 
   const handleDragLeave = (e) => {
@@ -70,6 +74,7 @@ const FileUpload = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    // setFile(selectedFile);
 
     // Acceptable MIME types for CSV and Excel files
     const allowedTypes = [
@@ -85,7 +90,81 @@ const FileUpload = () => {
       setError("");
       setFile(selectedFile);
     }
+
+
+    
   };
+
+
+  const showC3=()=>{
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        const data = results.data.map((row) => {
+          return Object.fromEntries(
+            Object.entries(row).map(([key, value]) => {
+              const parsedValue = value;
+              return [key, isNaN(parsedValue) ? null : parsedValue];
+            })
+          );
+        });
+        setData(data);
+
+      },
+    });
+   
+
+    const dataLength = data.length;  // Calculate the length once
+    const c3Values = [];
+    for (let i = 0; i < dataLength-1; i++) {
+      const row = data[i];
+      if (row.C3 && row.C3.trim() !== '') {  
+        c3Values.push(row.C3);
+        c3Values.push(" ");
+      } else {
+        // console.log("Nan");
+        c3Values.push("Nan");  
+        c3Values.push(" ");
+      }
+    }
+
+    setc3Values(c3Values);
+  }
+  
+  const showC4=()=>{
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        const data = results.data.map((row) => {
+          return Object.fromEntries(
+            Object.entries(row).map(([key, value]) => {
+              const parsedValue = value;
+              return [key, isNaN(parsedValue) ? null : parsedValue];
+            })
+          );
+        });
+        setData(data);
+        
+      },
+    });
+    
+    
+    const dataLength = data.length;  
+    const c4Values=[]
+    for (let i = 0; i < dataLength-1; i++) {
+      const row = data[i];
+      if (row.C4 && row.C4.trim() !== '') {  
+        c4Values.push(row.C4); 
+        c4Values.push(" ");
+      } else {
+        c4Values.push("Nan"); 
+        c4Values.push(" ");
+        
+      }
+    }
+    setc4Values(c4Values);
+    
+  }
 
   useEffect(() => {
     console.log("File state updated:", file);
@@ -98,7 +177,7 @@ const FileUpload = () => {
       return;
     }
 
-    const upload_uri =import.meta.env.VITE_REACT_APP_BACKEND_URL;
+    const upload_uri = import.meta.env.VITE_REACT_APP_BACKEND_URL;
     console.log(upload_uri);
     const formData = new FormData();
     formData.append("file", file);
@@ -108,9 +187,7 @@ const FileUpload = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        // "http://localhost:5000/upload",
         `${upload_uri}/upload`,
-        // "https://backendde-1.onrender.com/upload",
         formData,
         {
           headers: {
@@ -121,36 +198,35 @@ const FileUpload = () => {
 
       console.log("Response from flask", response.data);
       console.log("Data type of the response:", typeof response.data);
-      
-      // const obj = JSON.parse(response.data);
-      // console.log(obj);
 
-      console.log(response.data["c3"]);
       const { c3, c4, c3nans, c4nans } = response.data;
-      // console.log("ikuhoji");
       setC3Data(c3 || []);
       setC4Data(c4 || []);
       setC3nans(c3nans);
       setC4nans(c4nans);
       setC3list(response.data.C3data);
-      
-      console.log(c3)
-      console.log(c4)
-      if(c3==-1){
+
+      console.log(c3);
+      console.log(c4);
+      if (c3 == -1) {
         setIsc3dataerror(true);
       }
-      if(c4==-1) setIsc4dataerror(true);
+      if (c4 == -1) setIsc4dataerror(true);
 
       setError("");
     } catch (error) {
-      if(error.response.status===400){
-        // console.error( error.response.status);
-        setanyOneAbsent(true);
+      if (error.response.status === 400) {
+        setAnyOneAbsent(true);
       }
       setError("There was an issue uploading the file. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleShowColumnC1 = () => {
+    const extractedData = data.map((row) => row.C1); // Assuming the column name is 'C1'
+    setColumnC3(extractedData); // Update state to display C1 column
   };
 
   const handleOperationChange = (e) => {
@@ -171,13 +247,11 @@ const FileUpload = () => {
           <div className="entry1">
             <h1 className="upload_csv">Upload CSV File</h1>
             <input
-              // <br />
               className="fileupl"
               type="file"
               accept=".csv"
               onChange={handleFileChange}
             />
-            
 
             {error && <p className="error">{error}</p>}
 
@@ -193,11 +267,7 @@ const FileUpload = () => {
                 readOnly
                 defaultValue=""
                 className={isDragging ? "dragging" : ""}
-                 // Add dragging class
               />
-
-
-
             </div>
 
             <div className="warning">
@@ -205,30 +275,29 @@ const FileUpload = () => {
                 {isc3dataerror && (
                   <div className="warning_box">
                     <p className="warning_text">
-                      <strong>Column C3:</strong> Data type is incompatible for mathematical operations (e.g., contains characters or strings).
+                      <strong>Column C3:</strong> Data type is incompatible for
+                      mathematical operations.
                     </p>
                   </div>
                 )}
                 {isc4dataerror && (
                   <div className="warning_box">
                     <p className="warning_text">
-                      <strong>Column C4:</strong> Data type is incompatible for mathematical operations (e.g., contains characters or strings).
+                      <strong>Column C4:</strong> Data type is incompatible for
+                      mathematical operations.
                     </p>
                   </div>
                 )}
-                
+
                 {anyOneAbsent && (
                   <div className="warning_box">
                     <p className="warning_text">
-                      <p>Ensure both C3 and C4 columns are present..</p>
+                      Ensure both C3 and C4 columns are present.
                     </p>
                   </div>
                 )}
-
               </div>
             </div>
-
-
           </div>
 
           <div className="result1">
@@ -283,6 +352,23 @@ const FileUpload = () => {
           </div>
         </div>
       </div>
+
+      <div className="sec-2">
+        <button className="extract_cols" onClick={showC3}>Click here to Extract Columns</button>
+        <br />
+        <button className="showw" onClick={showC3}>View C3</button>
+        <div className="scroll-container" >
+
+            {c3Values}
+        </div>
+        
+
+        <button className="showw" onClick={showC4}>View C4</button>
+        <div className="scroll-container" >
+          {c4Values}
+        </div>
+      </div>
+      
     </div>
   );
 };
