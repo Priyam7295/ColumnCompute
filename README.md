@@ -13,6 +13,7 @@
 ## 1. Quick Walkthrough
 <img src="https://github.com/user-attachments/assets/5508aff7-32ad-44ac-b5fd-545e2c18fdb7" width="400"/>
 <img src="https://github.com/user-attachments/assets/8d67eb38-33f7-4e03-b792-b1948db52fd9" width="400"/>
+<img src="https://github.com/user-attachments/assets/2d61a75e-98c7-4ca5-9d3d-cd26c5831584" width="400"/>
 <img src="https://github.com/user-attachments/assets/82509614-f5aa-42be-b12b-3cf3a578953a" width="400"/>
 <img src="https://github.com/user-attachments/assets/cdddcd20-fc80-462a-bef8-d885b494a336" width="400"/>
 
